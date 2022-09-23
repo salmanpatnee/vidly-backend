@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Resources\MovieResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class MovieController extends Controller
 {
@@ -39,7 +40,13 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request)
     {
-        //
+        $movie = Movie::create($request->all());
+
+        return response()->json([
+            'message'   => 'Movie created successfully.',
+            'data'      => $movie,
+            'status'    => 'success'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -50,7 +57,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        return new MovieResource($movie);
     }
 
     /**
