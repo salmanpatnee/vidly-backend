@@ -80,7 +80,13 @@ class MovieController extends Controller
      */
     public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $movie->update($request->all());
+
+        return response()->json([
+            'message'   => 'Movie updated successfully.',
+            'data'      => $movie,
+            'status'    => 'success'
+        ], Response::HTTP_OK);
     }
 
     /**
