@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [AuthController::class, 'login']);
 Route::apiResource('users', UserController::class);
 Route::apiResource('genres', GenreController::class);
 Route::apiResource('movies', MovieController::class);
