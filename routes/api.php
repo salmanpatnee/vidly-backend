@@ -22,9 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('genres', GenreController::class);
-Route::apiResource('movies', MovieController::class);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('genres', GenreController::class);
+    Route::apiResource('movies', MovieController::class);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource($request->user());
