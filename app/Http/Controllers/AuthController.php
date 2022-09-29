@@ -22,11 +22,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken')->plainTextToken;
 
-        return response()->json([
-            'status_code'  => Response::HTTP_CREATED,
-            'message'  => 'User registered successfully.',
-            'access_token' => $token,
-        ]);
+        return response()->json(
+            ['message'  => 'User registered successfully.', 'access_token' => $token,],
+            Response::HTTP_CREATED
+        );
     }
 
     public function login(Request $request)
@@ -39,10 +38,10 @@ class AuthController extends Controller
 
             if (!Auth::attempt($attributes)) {
 
-                return response()->json([
-                    'status_code' => Response::HTTP_UNAUTHORIZED,
-                    'message' => 'Email or Password is not valid.'
-                ]);
+                return response()->json(
+                    ['message' => 'Email or Password is not valid.'],
+                    Response::HTTP_UNAUTHORIZED
+                );
             }
 
             $user = Auth::user();
@@ -50,10 +49,10 @@ class AuthController extends Controller
             $token = $user->createToken('authToken')->plainTextToken;
 
 
-            return response()->json([
-                'status_code'  => Response::HTTP_OK,
-                'access_token' => $token,
-            ]);
+            return response()->json(
+                ['access_token' => $token],
+                Response::HTTP_OK
+            );
         } catch (\Throwable $th) {
             return response()->json([
                 'status_code' => Response::HTTP_INTERNAL_SERVER_ERROR,
