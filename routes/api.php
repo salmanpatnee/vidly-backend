@@ -22,10 +22,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::get('/genres', [GenreController::class, 'index']);
+Route::get('/movies', [MovieController::class, 'index']);
+
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::apiResource('users', UserController::class);
-    Route::apiResource('genres', GenreController::class);
-    Route::apiResource('movies', MovieController::class);
+    Route::apiResource('genres', GenreController::class)->except('index');
+    Route::apiResource('movies', MovieController::class)->except('index');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
